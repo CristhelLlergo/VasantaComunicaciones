@@ -26,10 +26,10 @@ class Operaciones extends Model
         return $this->belongsTo(Usuarios::class, 'id_users'); 
     }
     // Relación con Finanzas (una operación puede tener varios registros financieros)
-    public function finanzas()
-    {
-        return $this->hasMany(Finanzas::class, 'id_site');
-    }
+    public function operaciones()
+{
+    return $this->belongsTo(Operaciones::class, 'id_site', 'id'); 
+}
 
     // Relación con ReportesOperativos (una operación puede tener varios reportes operativos)
     public function reportesOperativos()

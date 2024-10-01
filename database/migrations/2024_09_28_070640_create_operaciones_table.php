@@ -12,7 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('operaciones', function (Blueprint $table) {
-            $table->id(); // Cambié 'site' a 'id' para consistencia
             $table->string('site_name'); 
             $table->timestamp('registration_timestamp')->useCurrent(); 
             $table->string('event_type'); 
