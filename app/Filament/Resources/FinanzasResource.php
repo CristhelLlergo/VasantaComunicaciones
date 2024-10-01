@@ -27,13 +27,15 @@ class FinanzasResource extends Resource
     {
         return $form
             ->schema([
-            TextInput::make('id_site')
+                Select::make('id_site')
                 ->label('Nombre del Sitio')
-                ->relationship('id_site', 'site_name')
+                ->relationship('operaciones', 'site_name') // Usa 'operaciones' como el nombre de la relación
                 ->required(),
+            
 
-            DatePicker::make('date')
+                DatePicker::make('date')
                 ->label('Fecha')
+                ->default(now()) // Establece la fecha actual como valor predeterminado
                 ->required(),
 
             Select::make('movement')
