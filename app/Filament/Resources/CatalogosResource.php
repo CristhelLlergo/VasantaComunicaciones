@@ -13,7 +13,6 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\FileUpload;
-use Illuminate\Support\Facades\Storage;
 
 class CatalogosResource extends Resource
 {
@@ -31,14 +30,14 @@ class CatalogosResource extends Resource
 
                 Select::make('id_users')
                     ->label('Usuario')
-                    ->relationship('user', 'name') 
+                    ->relationship('user', 'name')
                     ->required(),
-           
+
                 FileUpload::make('pdf_document')
                     ->label('Documento PDF')
                     ->acceptedFileTypes(['application/pdf'])
-                    ->directory('catalogos_pdfs') 
-                    ->preserveFilenames() 
+                    ->directory('catalogos_pdfs')
+                    ->preserveFilenames()
                     ->required(),
             ]);
     }
@@ -52,7 +51,7 @@ class CatalogosResource extends Resource
                     ->sortable()
                     ->searchable(),
 
-                TextColumn::make('user.name') 
+                TextColumn::make('user.name')
                     ->label('Usuario'),
 
                 TextColumn::make('pdf_document')
@@ -66,13 +65,12 @@ class CatalogosResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
-               
                 Tables\Actions\Action::make('download')
                     ->label('Descargar PDF')
                     ->icon('heroicon-o-arrow-down-tray')
                     ->color('success')
-                    ->action(function (Catalogos $record) {  
-                        $filePath = storage_path('app/public/catalogos_pdfs/' . $record->pdf_document); 
+                    ->action(function (Catalogos $record) {
+                        $filePath = storage_path('app/public/catalogos_pdfs/' . $record->pdf_document);
 
                         if (!file_exists($filePath)) {
                             return redirect()->back()->withErrors('El archivo no existe.');

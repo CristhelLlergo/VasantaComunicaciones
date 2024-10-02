@@ -8,25 +8,24 @@ use Illuminate\Database\Eloquent\Model;
 class ReportesOperativos extends Model
 {
     use HasFactory;
-    
-    protected $table = 'reportes_operativos'; 
-    
+
+    protected $table = 'reportes_operativos'; // Nombre de la tabla
+
     protected $fillable = [
-        'id_users',  
-        'id_site',   
-        'event_type',
-        'date',
-        'pdf_document',
+        'user_id',  // ID del usuario que creó el reporte
+        'site_id',  // ID del sitio asociado
+        'event_type', // Tipo de evento
+        'date', // Fecha del evento
+        'pdf_document', // Ruta del documento PDF
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_users');
+        return $this->belongsTo(User::class, 'user_id'); 
     }
 
-    // Relación con Operaciones
     public function operacion()
     {
-        return $this->belongsTo(Operaciones::class, 'id_site');
+        return $this->belongsTo(Operaciones::class, 'site_id'); 
     }
 }

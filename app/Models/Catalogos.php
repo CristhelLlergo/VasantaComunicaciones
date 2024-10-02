@@ -17,7 +17,6 @@ class Catalogos extends Model
         'pdf_document', 
     ];
 
-    
     public function user()
     {
         return $this->belongsTo(User::class, 'id_users');

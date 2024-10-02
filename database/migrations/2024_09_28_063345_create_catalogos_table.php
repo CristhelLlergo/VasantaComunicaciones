@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -15,9 +16,8 @@ return new class extends Migration
             $table->string('pdf_document'); 
             $table->timestamps();
 
-            // esta linea de codigo es clave foránea apuntando a la tabla correcta
+            // Clave foránea apuntando a la tabla de usuarios
             $table->foreign('id_users')->references('id')->on('users')->onDelete('cascade');
-
         });
     }
 

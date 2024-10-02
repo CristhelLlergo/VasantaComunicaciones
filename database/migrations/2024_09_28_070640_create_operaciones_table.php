@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('operaciones', function (Blueprint $table) {
+            $table->id(); // Asegúrate de agregar una columna de ID única
             $table->string('site_name'); 
             $table->timestamp('registration_timestamp')->useCurrent(); 
             $table->string('event_type'); 
@@ -23,8 +24,8 @@ return new class extends Migration
             $table->string('event_status'); 
             $table->timestamps();
 
-            // esta linea de codigo es la relación con la tabla de Usuario 
-            $table->foreign('id_users')->references('id')->on('nuevos_usuarios')->onDelete('cascade');
+            // Relación con la tabla de Usuario 
+            $table->foreign('id_users')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
