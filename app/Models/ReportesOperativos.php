@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class ReportesOperativos extends Model
 {
     use HasFactory;
+    
     protected $table = 'reportes_operativos'; 
+    
     protected $fillable = [
         'id_users',  
         'id_site',   
@@ -17,15 +19,14 @@ class ReportesOperativos extends Model
         'pdf_document',
     ];
 
-    // Relación con Usuarios
     public function usuario()
     {
-        return $this->belongsTo(Usuarios::class, 'id_users');
+        return $this->belongsTo(Usuarios::class, 'id_users'); 
     }
 
     // Relación con Operaciones
     public function operacion()
     {
-        return $this->belongsTo(Operaciones::class, 'id_site'); 
+        return $this->belongsTo(Operaciones::class, 'id_site');
     }
 }

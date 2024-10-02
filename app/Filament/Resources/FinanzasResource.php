@@ -34,7 +34,7 @@ class FinanzasResource extends Resource
             
 
             DatePicker::make('date')
-                ->label('Fecha y Hora de Registro')
+                ->label('Fecha')
                 ->default(now()->startOfDay()) 
                 ->required(),
 

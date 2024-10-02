@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ReportesOperativosResource\Pages;
-use App\Filament\Resources\ReportesOperativosResource\RelationManagers;
 use App\Models\ReportesOperativos;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -11,54 +10,46 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ReportesOperativosResource extends Resource
 {
     protected static ?string $model = ReportesOperativos::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-document';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                
-            Select::make('id_users')
-                ->label('Usuario')
-                ->relationship('users', 'name')
-                ->required()
-                ->searchable(),
+                Select::make('id_users')
+                    ->label('Usuario')
+                    ->relationship('usuario', 'name') 
+                    ->required(),
 
-            Select::make('id_site')
-                ->label('Sitio')
-                ->relationship('site', 'name')
-                ->required()
-                ->searchable(),
+                Select::make('id_site')
+                    ->label('Nombre del Sitio')
+                    ->relationship('operacion', 'site_name') 
+                    ->required(),
 
-            Select::make('event_type')
-                ->label('Tipo de Evento')
-                ->options([
-                    'preventivo' => 'Mantenimiento Preventivo',
-                    'correctivo' => 'Mantenimiento Correctivo',
-                ])
-                ->required(),
+                Select::make('event_type')
+                    ->label('Tipo de Evento')
+                    ->options([
+                        'preventivo' => 'Mantenimiento Preventivo',
+                        'correctivo' => 'Mantenimiento Correctivo',
+                    ])
+                    ->required(),
 
-            DatePicker::make('date')
-                ->label('Fecha del Evento')
-                ->required(),
-                
+                DatePicker::make('date')
+                    ->label('Fecha del Evento')
+                    ->required(),
+
                 FileUpload::make('pdf_document')
-                ->label('Documento PDF')
-                ->acceptedFileTypes(['application/pdf'])
-                ->directory('documento') 
-                ->required(),
-
+                    ->label('Documento PDF')
+                    ->acceptedFileTypes(['application/pdf'])
+                    ->directory('documentos')
+                    ->required(),
             ]);
     }
 
@@ -66,53 +57,49 @@ class ReportesOperativosResource extends Resource
     {
         return $table
             ->columns([
-                
-                
-                TextColumn::make('users.name')
-                ->label('Usuario'),
-              
-                TextColumn::make('site.name')
-                ->label('Usuario'),
-                
+                TextColumn::make('usuario.name') // Asegúrate de usar la relación correcta
+                ->label('Usuario')
+                ->sortable(),
+                TextColumn::make('operacion.site_name')
+                    ->label('Sitio'),
                 TextColumn::make('event_type')
-                ->label('Tipo de Evento')
-                ->sortable()
-                ->searchable()
-                ->formatStateUsing(fn (string $state): string => match ($state) {
-                    'preventivo' => 'Mantenimiento Preventivo',
-                    'correctivo' => 'Mantenimiento Correctivo',
-                    default => 'Desconocido',
-                }),
-                
+                    ->label('Tipo de Evento')
+                    ->sortable()
+                    ->searchable()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'preventivo' => 'Mantenimiento Preventivo',
+                        'correctivo' => 'Mantenimiento Correctivo',
+                        default => 'Desconocido',
+                    }),
                 TextColumn::make('date')
-                ->label('Fecha')
-                ->sortable()
-                ->searchable()
-                ->date(),
-
+                    ->label('Fecha')
+                    ->sortable()
+                    ->searchable()
+                    ->date(),
                 TextColumn::make('pdf_document')
                     ->label('Documento PDF')
-                    ->url(fn($record) => asset('storage/' . $record->documento_pdf))
+                    ->url(fn($record) => asset('storage/' . $record->pdf_document))
                     ->openUrlInNewTab(),
-            ])
-            ->filters([
-                //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('download')
+                    ->label('Descargar PDF')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->color('success')
+                    ->action(function (ReportesOperativos $record) {
+                        $filePath = storage_path('app/public/documentos/' . $record->pdf_document);
+
+                        if (!file_exists($filePath)) {
+                            return redirect()->back()->withErrors('El archivo no existe.');
+                        }
+
+                        return response()->download($filePath, $record->pdf_document);
+                    }),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\DeleteBulkAction::make(),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
     }
 
     public static function getPages(): array

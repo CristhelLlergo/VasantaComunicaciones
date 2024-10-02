@@ -37,8 +37,8 @@ class CatalogosResource extends Resource
                 FileUpload::make('pdf_document')
                     ->label('Documento PDF')
                     ->acceptedFileTypes(['application/pdf'])
-                    ->directory('catalogos_pdfs') // Define el directorio de almacenamiento
-                    ->preserveFilenames() // Preserva el nombre original del archivo
+                    ->directory('catalogos_pdfs') 
+                    ->preserveFilenames() 
                     ->required(),
             ]);
     }
@@ -55,11 +55,10 @@ class CatalogosResource extends Resource
                 TextColumn::make('users.name')
                     ->label('Usuario'),
 
-                
                 TextColumn::make('pdf_document')
-                    ->label(' PDF')
-                    ->url(fn ($record) => Storage::disk('public')->url('catalogos_pdfs/' . $record->pdf_document)) 
-                    ->openUrlInNewTab(), 
+                    ->label('PDF')
+                    ->url(fn($record) => asset('storage/' . $record->pdf_document))
+                    ->openUrlInNewTab(),
             ])
             ->emptyStateHeading('No hay catálogos disponibles')
             ->emptyStateDescription('Actualmente no hay datos de catálogos registrados. Por favor, agrega nuevos catálogos para empezar a gestionar la información.')
@@ -72,8 +71,8 @@ class CatalogosResource extends Resource
                     ->label('Descargar PDF')
                     ->icon('heroicon-o-arrow-down-tray')
                     ->color('success')
-                    ->action(function (Catalogos $record) {
-                        $filePath = storage_path('app/public/catalogos_pdfs/' . $record->pdf_document);
+                    ->action(function (Catalogos $record) {  
+                        $filePath = storage_path('app/public/catalogos_pdfs/' . $record->pdf_document); 
 
                         if (!file_exists($filePath)) {
                             return redirect()->back()->withErrors('El archivo no existe.');
