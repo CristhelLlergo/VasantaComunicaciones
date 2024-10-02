@@ -31,7 +31,7 @@ class CatalogosResource extends Resource
 
                 Select::make('id_users')
                     ->label('Usuario')
-                    ->relationship('usuario', 'name') 
+                    ->relationship('user', 'name') 
                     ->required(),
            
                 FileUpload::make('pdf_document')
@@ -52,7 +52,7 @@ class CatalogosResource extends Resource
                     ->sortable()
                     ->searchable(),
 
-                    TextColumn::make('usuario.name')
+                TextColumn::make('user.name') 
                     ->label('Usuario'),
 
                 TextColumn::make('pdf_document')

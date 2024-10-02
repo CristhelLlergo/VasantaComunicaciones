@@ -21,9 +21,9 @@ class Operaciones extends Model
     
 
     
-    public function usuario()
+    public function user()
     {
-        return $this->belongsTo(Usuarios::class, 'id_users'); 
+        return $this->belongsTo(User::class, 'id_users');
     }
     // Relación con Finanzas (una operación puede tener varios registros financieros)
     public function operaciones()

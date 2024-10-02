@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Catalogos extends Model
 {
     use HasFactory;
+
     protected $table = 'catalogos'; 
 
     protected $fillable = [
@@ -16,8 +17,9 @@ class Catalogos extends Model
         'pdf_document', 
     ];
 
-    public function usuario()
+    
+    public function user()
     {
-        return $this->belongsTo(Usuarios::class, 'id_users');
+        return $this->belongsTo(User::class, 'id_users');
     }
 }

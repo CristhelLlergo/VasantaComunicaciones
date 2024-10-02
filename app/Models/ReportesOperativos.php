@@ -19,9 +19,9 @@ class ReportesOperativos extends Model
         'pdf_document',
     ];
 
-    public function usuario()
+    public function user()
     {
-        return $this->belongsTo(Usuarios::class, 'id_users'); 
+        return $this->belongsTo(User::class, 'id_users');
     }
 
     // Relación con Operaciones

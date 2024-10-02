@@ -16,7 +16,8 @@ return new class extends Migration
             $table->timestamps();
 
             // esta linea de codigo es clave foránea apuntando a la tabla correcta
-            $table->foreign('id_users')->references('id')->on('nuevos_usuarios')->onDelete('cascade'); 
+            $table->foreign('id_users')->references('id')->on('users')->onDelete('cascade');
+
         });
     }
 

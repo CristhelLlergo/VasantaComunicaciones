@@ -42,4 +42,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    // Relación con el modelo de Catalogos
+    public function catalogos()
+    {
+        return $this->hasMany(Catalogos::class, 'id_users');
+    }
+
+    // Relación con el modelo de Operaciones
+    public function operaciones()
+    {
+        return $this->hasMany(Operaciones::class, 'id_users');
+    }
+     // Relación con el modelo de ReportesOperativos (un usuario puede tener varios reportes operativos)
+     public function reportesOperativos()
+     {
+         return $this->hasMany(ReportesOperativos::class, 'id_users');
+     }
 }
