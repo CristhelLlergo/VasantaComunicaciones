@@ -151,8 +151,9 @@ class OperacionesResource extends Resource
                     default => 'Desconocido',
                 }),
 
-                TextColumn::make('users.name')
+                TextColumn::make('usuario.name')
                 ->label('Usuario'),
+            
 
             TextColumn::make('position')
                 ->label('Puesto')
