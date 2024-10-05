@@ -30,7 +30,7 @@ class ReportesOperativosResource extends Resource
 
                 Select::make('id_site')
                     ->label('Nombre del Sitio')
-                    ->relationship('operacion', 'site_name') 
+                    ->relationship('operacion', 'site_name')  // Asegúrate de que la relación 'operacion' esté bien definida
                     ->required(),
 
                 Select::make('event_type')
@@ -43,6 +43,7 @@ class ReportesOperativosResource extends Resource
 
                 DatePicker::make('date')
                     ->label('Fecha del Evento')
+                    ->default(now()->subDay()->startOfDay())
                     ->required(),
 
                 FileUpload::make('pdf_document')
@@ -58,10 +59,15 @@ class ReportesOperativosResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('user.name')
-                ->label('Usuario')
-                ->sortable(),
-                TextColumn::make('operacion.site_name')
-                    ->label('Sitio'),
+                    ->label('Usuario')
+                    ->sortable()
+                    ->searchable(),
+                
+                TextColumn::make('operacion.site_name')  // Cambié 'operaciones' a 'operacion' para que coincida con la relación
+                    ->label('Nombre del Sitio')
+                    ->sortable()
+                    ->searchable(),
+                    
                 TextColumn::make('event_type')
                     ->label('Tipo de Evento')
                     ->sortable()
@@ -71,11 +77,13 @@ class ReportesOperativosResource extends Resource
                         'correctivo' => 'Mantenimiento Correctivo',
                         default => 'Desconocido',
                     }),
+
                 TextColumn::make('date')
                     ->label('Fecha')
                     ->sortable()
                     ->searchable()
                     ->date(),
+
                 TextColumn::make('pdf_document')
                     ->label('Documento PDF')
                     ->url(fn($record) => asset('storage/' . $record->pdf_document))

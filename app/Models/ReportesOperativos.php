@@ -12,20 +12,20 @@ class ReportesOperativos extends Model
     protected $table = 'reportes_operativos'; // Nombre de la tabla
 
     protected $fillable = [
-        'user_id',  // ID del usuario que creó el reporte
-        'site_id',  // ID del sitio asociado
-        'event_type', // Tipo de evento
-        'date', // Fecha del evento
-        'pdf_document', // Ruta del documento PDF
+        'id_users',  
+        'id_site',  
+        'event_type', 
+        'date', 
+        'pdf_document', 
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id'); 
+        return $this->belongsTo(User::class, 'id_users');
     }
 
     public function operacion()
     {
-        return $this->belongsTo(Operaciones::class, 'site_id'); 
+        return $this->belongsTo(Operaciones::class, 'id_site'); 
     }
 }

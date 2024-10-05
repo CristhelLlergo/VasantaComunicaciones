@@ -35,7 +35,7 @@ class FinanzasResource extends Resource
 
             DatePicker::make('date')
                 ->label('Fecha')
-                ->default(now()->startOfDay()) 
+                ->default(now()->subDay()->startOfDay())
                 ->required(),
 
             Select::make('movement')
@@ -92,7 +92,7 @@ class FinanzasResource extends Resource
         
             ->columns([
 
-            TextColumn::make('site.site_name')
+                TextColumn::make('operaciones.site_name')
                 ->label('Nombre del Sitio')
                 ->sortable()
                 ->searchable(),

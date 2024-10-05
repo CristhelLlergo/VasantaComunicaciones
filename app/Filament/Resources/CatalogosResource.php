@@ -13,7 +13,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\FileUpload;
-use Illuminate\Support\Facades\Storage; // Agrega esta línea
+use Illuminate\Support\Facades\Storage; 
 
 class CatalogosResource extends Resource
 {

@@ -11,6 +11,7 @@ use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\TextInput;
 
 class OperacionesResource extends Resource
@@ -25,10 +26,13 @@ class OperacionesResource extends Resource
                 ->label('Nombre del Sitio')
                 ->required(),
 
-            DatePicker::make('registration_timestamp')
+                DateTimePicker::make('registration_timestamp')
                 ->label('Fecha y Hora de Registro')
                 ->required()
-                ->default(now()),
+                ->default(now()) // Establece la fecha y hora actuales automáticamente
+                ->seconds(false), // Esto oculta los segundos
+            
+            
 
             Select::make('event_type')
                 ->label('Tipo de Evento')
@@ -68,6 +72,7 @@ class OperacionesResource extends Resource
             DatePicker::make('closing_date')
                 ->label('Fecha de Cierre del Evento')
                 ->nullable(),
+                
 
             Select::make('event_status')
                 ->label('Estatus del Evento')
