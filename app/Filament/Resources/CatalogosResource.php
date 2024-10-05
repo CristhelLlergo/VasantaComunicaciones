@@ -13,6 +13,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\FileUpload;
+use Illuminate\Support\Facades\Storage; // Agrega esta línea
 
 class CatalogosResource extends Resource
 {
@@ -70,13 +71,7 @@ class CatalogosResource extends Resource
                     ->icon('heroicon-o-arrow-down-tray')
                     ->color('success')
                     ->action(function (Catalogos $record) {
-                        $filePath = storage_path('app/public/catalogos_pdfs/' . $record->pdf_document);
-
-                        if (!file_exists($filePath)) {
-                            return redirect()->back()->withErrors('El archivo no existe.');
-                        }
-
-                        return response()->download($filePath, $record->pdf_document);
+                        return response()->download(storage_path('app/public/catalogos_pdfs/' . $record->pdf_document));
                     }),
             ])
             ->bulkActions([

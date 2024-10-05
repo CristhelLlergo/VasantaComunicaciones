@@ -25,7 +25,7 @@ class ReportesOperativosResource extends Resource
             ->schema([
                 Select::make('id_users')
                     ->label('Usuario')
-                    ->relationship('usuario', 'name') 
+                    ->relationship('user', 'name')
                     ->required(),
 
                 Select::make('id_site')
@@ -57,7 +57,7 @@ class ReportesOperativosResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('usuario.name') // Asegúrate de usar la relación correcta
+                TextColumn::make('user.name')
                 ->label('Usuario')
                 ->sortable(),
                 TextColumn::make('operacion.site_name')
