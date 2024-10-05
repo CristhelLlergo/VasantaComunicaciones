@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\EvaluacionesResource\Pages;
 use App\Models\Evaluaciones;
+use App\Models\Operaciones; 
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -40,7 +41,10 @@ class EvaluacionesResource extends Resource
 
                 Select::make('event_type')
                     ->label('Tipo de Evento')
-                    ->relationship('operaciones', 'event_type')
+                    ->options([
+                        'preventivo' => 'Mantenimiento Preventivo',
+                        'correctivo' => 'Mantenimiento Correctivo',
+                    ])
                     ->required(),
 
                 DatePicker::make('opening_date')
@@ -55,11 +59,11 @@ class EvaluacionesResource extends Resource
                     ])
                     ->required(),
 
-                RichEditor::make('observations')
+                
+                RichEditor::make('observations')  
                     ->label('Observaciones')
-                    ->hint('Translatable')
-                    ->hintColor('primary')
-                    ->required(),
+                    ->required() 
+                    ->columnSpanFull(), 
             ]);
     }
 
@@ -67,7 +71,7 @@ class EvaluacionesResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('site.site_name')
+                TextColumn::make('operacion.site_name') // Asegúrate de que el nombre de la relación sea correcto
                     ->label('Nombre del Sitio')
                     ->sortable()
                     ->searchable(),
@@ -88,6 +92,8 @@ class EvaluacionesResource extends Resource
                     ->sortable()
                     ->searchable()
                     ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'preventivo' => 'Mantenimiento Preventivo',
+                        'correctivo' => 'Mantenimiento Correctivo',
                         default => 'Desconocido',
                     }),
 
@@ -108,13 +114,12 @@ class EvaluacionesResource extends Resource
                         default => 'gray',
                     }),
 
-                TextColumn::make('observations')
+                    TextColumn::make('observations')
                     ->label('Observaciones')
-                    ->limit(50) 
                     ->sortable()
-                    ->searchable(),
-            ])
-            ->filters([
+                    ->searchable()
+                    ->limit(50)
+                    ->html(),
                 
             ])
             ->actions([
@@ -129,9 +134,7 @@ class EvaluacionesResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            
-        ];
+        return [];
     }
 
     public static function getPages(): array

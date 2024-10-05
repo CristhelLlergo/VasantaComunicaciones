@@ -104,21 +104,15 @@ class OperacionesResource extends Resource
                         default => 'Desconocido',
                     }),
 
-                TextColumn::make('action')
+                    TextColumn::make('action')
                     ->label('Acción')
                     ->sortable()
                     ->searchable()
                     ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'inspeccion_zapatas' => 'Inspección de zapatas para retenida',
+                        'inspeccion_base' => 'Inspección de base para torre',
+                        'inspeccion_torre' => 'Inspección de Torre de telecomunicaciones',
                         default => 'Desconocido',
-                    }),
-                    TextColumn::make('status')
-                    ->label('Estado')
-                    ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'pagado' => 'success',
-                        'no pagado' => 'danger',
-                        default => 'gray',
-                        
                     }),
                 TextColumn::make('position')
                     ->label('Puesto')

@@ -4,24 +4,25 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateEvaluacionesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('evaluaciones', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->foreignId('id_site')->constrained('operaciones'); 
+            $table->foreignId('id_users')->constrained('users'); 
+            $table->date('date'); 
+            $table->string('event_type'); 
+            $table->date('opening_date'); 
+            $table->string('event_status'); 
+            $table->text('observations'); 
+            $table->timestamps(); 
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('evaluaciones');
     }
-};
+}
