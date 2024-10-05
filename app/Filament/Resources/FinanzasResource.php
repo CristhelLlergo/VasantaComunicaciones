@@ -35,7 +35,7 @@ class FinanzasResource extends Resource
 
             DatePicker::make('date')
                 ->label('Fecha')
-                ->default(now()->subDay()->startOfDay())
+                ->default(now()->startOfDay()) 
                 ->required(),
 
             Select::make('movement')

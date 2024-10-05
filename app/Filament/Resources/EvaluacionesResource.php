@@ -22,56 +22,65 @@ class EvaluacionesResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-document-check';
 
     public static function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                Select::make('id_site')
-                    ->label('Nombre del Sitio')
-                    ->relationship('operacion', 'site_name')
-                    ->required(),
+{
+    return $form
+        ->schema([
+            Select::make('id_site')
+                ->label('Nombre del Sitio')
+                ->relationship('operacion', 'site_name')
+                ->required()
+                ->reactive() 
+                ->afterStateUpdated(function ($state, callable $set) {
+                    $operacion = Operaciones::find($state);
+                    if ($operacion) {
+                        
+                        $set('event_type', $operacion->event_type);
+                        $set('opening_date', $operacion->opening_date);
+                        $set('event_status', $operacion->event_status);
+                    }
+                }),
 
-                Select::make('id_users')
-                    ->label('Usuario')
-                    ->relationship('user', 'name')
-                    ->required(),
+            Select::make('id_users')
+                ->label('Usuario')
+                ->relationship('user', 'name')
+                ->required(),
 
-                DatePicker::make('date')
-                    ->label('Fecha del Evento')
-                    ->required(),
+            DatePicker::make('date')
+                ->label('Fecha')
+                ->default(now()->startOfDay()) 
+                ->required(),
 
-                Select::make('event_type')
-                    ->label('Tipo de Evento')
-                    ->options([
-                        'preventivo' => 'Mantenimiento Preventivo',
-                        'correctivo' => 'Mantenimiento Correctivo',
-                    ])
-                    ->required(),
+            Select::make('event_type')
+                ->label('Tipo de Evento')
+                ->options([
+                    'preventivo' => 'Mantenimiento Preventivo',
+                    'correctivo' => 'Mantenimiento Correctivo',
+                ])
+                ->required(),
 
-                DatePicker::make('opening_date')
-                    ->label('Fecha de Apertura del Evento')
-                    ->required(),
+            DatePicker::make('opening_date')
+                ->label('Fecha de Apertura del Evento')
+                ->required(),
 
-                Select::make('event_status')
-                    ->label('Estatus del Evento')
-                    ->options([
-                        'abierto' => 'Abierto',
-                        'cerrado' => 'Cerrado',
-                    ])
-                    ->required(),
+            Select::make('event_status')
+                ->label('Estatus del Evento')
+                ->options([
+                    'abierto' => 'Abierto',
+                    'cerrado' => 'Cerrado',
+                ])
+                ->required(),
 
-                
-                RichEditor::make('observations')  
-                    ->label('Observaciones')
-                    ->required() 
-                    ->columnSpanFull(), 
-            ]);
-    }
-
+            RichEditor::make('observations')
+                ->label('Observaciones')
+                ->required()
+                ->columnSpanFull(),
+        ]);
+}
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('operacion.site_name') // Asegúrate de que el nombre de la relación sea correcto
+                TextColumn::make('operacion.site_name') 
                     ->label('Nombre del Sitio')
                     ->sortable()
                     ->searchable(),

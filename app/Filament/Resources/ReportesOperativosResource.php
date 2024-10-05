@@ -43,7 +43,7 @@ class ReportesOperativosResource extends Resource
 
                 DatePicker::make('date')
                     ->label('Fecha del Evento')
-                    ->default(now()->subDay()->startOfDay())
+                    ->default(now()->startOfDay()) 
                     ->required(),
 
                 FileUpload::make('pdf_document')
