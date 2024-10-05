@@ -44,7 +44,7 @@ class OperacionesResource extends Resource
                     'inspeccion_zapatas' => 'Inspección de zapatas para retenida',
                     'inspeccion_base' => 'Inspección de base para torre',
                     'inspeccion_torre' => 'Inspección de Torre de telecomunicaciones',
-                    // Agrega aquí el resto de las opciones...
+                   
                 ])
                 ->required(),
 
@@ -109,13 +109,17 @@ class OperacionesResource extends Resource
                     ->sortable()
                     ->searchable()
                     ->formatStateUsing(fn (string $state): string => match ($state) {
-                        // Agrega aquí el resto de las opciones...
                         default => 'Desconocido',
                     }),
-
-                TextColumn::make('user.name')
-                    ->label('Usuario'),
-
+                    TextColumn::make('status')
+                    ->label('Estado')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'pagado' => 'success',
+                        'no pagado' => 'danger',
+                        default => 'gray',
+                        
+                    }),
                 TextColumn::make('position')
                     ->label('Puesto')
                     ->sortable()
