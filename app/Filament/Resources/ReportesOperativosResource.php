@@ -30,7 +30,7 @@ class ReportesOperativosResource extends Resource
 
                 Select::make('id_site')
                     ->label('Nombre del Sitio')
-                    ->relationship('operacion', 'site_name')  // Asegúrate de que la relación 'operacion' esté bien definida
+                    ->relationship('operaciones', 'site_name')  // Asegúrate de que la relación 'operacion' esté bien definida en el modelo
                     ->required(),
 
                 Select::make('event_type')
@@ -41,11 +41,10 @@ class ReportesOperativosResource extends Resource
                     ])
                     ->required(),
 
-                    DatePicker::make('date')
+                DatePicker::make('date')
                     ->label('Fecha')
-                    ->default(now()) // Usar `now()` para considerar la fecha y hora actuales
+                    ->default(now()) 
                     ->required(),
-                
 
                 FileUpload::make('pdf_document')
                     ->label('Documento PDF')
@@ -63,8 +62,8 @@ class ReportesOperativosResource extends Resource
                     ->label('Usuario')
                     ->sortable()
                     ->searchable(),
-                
-                TextColumn::make('operacion.site_name')  // Cambié 'operaciones' a 'operacion' para que coincida con la relación
+
+                TextColumn::make('operaciones.site_name')  
                     ->label('Nombre del Sitio')
                     ->sortable()
                     ->searchable(),
@@ -98,13 +97,18 @@ class ReportesOperativosResource extends Resource
                     ->icon('heroicon-o-arrow-down-tray')
                     ->color('success')
                     ->action(function (ReportesOperativos $record) {
-                        $filePath = storage_path('app/public/documentos/' . $record->pdf_document);
+                        $filePath = storage_path('app/public/' . $record->pdf_document);
+                        
+                        if (file_exists($filePath)) {
+                            return response()->download($filePath);
+                        } else {
+                            session()->flash('notification', [
+                                'message' => 'El archivo PDF no se encontró.',
+                                'type' => 'danger',
+                            ]);
 
-                        if (!file_exists($filePath)) {
-                            return redirect()->back()->withErrors('El archivo no existe.');
+                            return redirect()->back();
                         }
-
-                        return response()->download($filePath, $record->pdf_document);
                     }),
             ])
             ->bulkActions([

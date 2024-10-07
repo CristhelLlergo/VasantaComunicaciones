@@ -55,10 +55,11 @@ class CatalogosResource extends Resource
                 TextColumn::make('user.name')
                     ->label('Usuario'),
 
-                TextColumn::make('pdf_document')
+                    TextColumn::make('pdf_document')
                     ->label('PDF')
                     ->url(fn($record) => asset('storage/' . $record->pdf_document))
                     ->openUrlInNewTab(),
+                
             ])
             ->emptyStateHeading('No hay catálogos disponibles')
             ->emptyStateDescription('Actualmente no hay datos de catálogos registrados. Por favor, agrega nuevos catálogos para empezar a gestionar la información.')
@@ -66,13 +67,29 @@ class CatalogosResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+             
                 Tables\Actions\Action::make('download')
-                    ->label('Descargar PDF')
-                    ->icon('heroicon-o-arrow-down-tray')
-                    ->color('success')
-                    ->action(function (Catalogos $record) {
-                        return response()->download(storage_path('app/public/catalogos_pdfs/' . $record->pdf_document));
-                    }),
+                ->label('Descargar PDF')
+                ->icon('heroicon-o-arrow-down-tray')
+                ->color('success')
+                ->action(function (Catalogos $record) {
+                    $filePath = storage_path('app/public/' . $record->pdf_document);
+                    
+                    if (file_exists($filePath)) {
+                        return response()->download($filePath);
+                    } else {
+                       
+                        session()->flash('notification', [
+                            'message' => 'El archivo PDF no se encontró.',
+                            'type' => 'danger',
+                        ]);
+            
+                        
+                    }
+                }),
+            
+
+
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
