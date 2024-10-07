@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\RolesResource\Pages;
-use App\Filament\Resources\RolesResource\RelationManagers;
-use App\Models\Roles;
+use App\Filament\Resources\PermisosResource\Pages;
+use App\Filament\Resources\PermisosResource\RelationManagers;
+use App\Models\Permisos;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,20 +13,25 @@ use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 
-class RolesResource extends Resource
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+
+class PermisosResource extends Resource
 {
-    protected static ?string $model = Roles::class;
+    protected static ?string $model = Permisos::class;
+
     protected static ?string $navigationGroup = 'Seguridad';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('name') // Se ha eliminado la coma anterior
-                    ->label('Nombre')
-                    ->autofocus()
-                    ->required(),
+                TextInput::make('name') 
+                ->label('Nombre')
+                ->autofocus()
+                ->required(),
             ]);
     }
 
@@ -35,16 +40,15 @@ class RolesResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->label('Nombre')
-                    ->sortable()
-                    ->searchable(),
+                ->label('Nombre')
+                ->sortable()
+                ->searchable(),
             ])
             ->filters([
-                // Puedes agregar filtros aquí si lo deseas
+                //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -56,16 +60,16 @@ class RolesResource extends Resource
     public static function getRelations(): array
     {
         return [
-            
+            //
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListRoles::route('/'),
-            'create' => Pages\CreateRoles::route('/create'),
-            'edit' => Pages\EditRoles::route('/{record}/edit'),
+            'index' => Pages\ListPermisos::route('/'),
+            'create' => Pages\CreatePermisos::route('/create'),
+            'edit' => Pages\EditPermisos::route('/{record}/edit'),
         ];
     }
 }

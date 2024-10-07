@@ -9,7 +9,7 @@ class ReportesOperativos extends Model
 {
     use HasFactory;
 
-    protected $table = 'reportes_operativos'; // Nombre de la tabla
+    protected $table = 'reportes_operativos'; 
 
     protected $fillable = [
         'id_users',  
