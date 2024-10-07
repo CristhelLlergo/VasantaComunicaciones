@@ -29,8 +29,8 @@ class OperacionesResource extends Resource
                 DateTimePicker::make('registration_timestamp')
                 ->label('Fecha y Hora de Registro')
                 ->required()
-                ->default(now()) // Establece la fecha y hora actuales automáticamente
-                ->seconds(false), // Esto oculta los segundos
+                ->default(now()) 
+                ->seconds(false),
             
             
 

@@ -45,11 +45,11 @@ class EvaluacionesResource extends Resource
                 ->relationship('user', 'name')
                 ->required(),
 
-            DatePicker::make('date')
+                DatePicker::make('date')
                 ->label('Fecha')
-                ->default(now()->startOfDay()) 
+                ->default(now()) 
                 ->required(),
-
+            
             Select::make('event_type')
                 ->label('Tipo de Evento')
                 ->options([
@@ -133,6 +133,8 @@ class EvaluacionesResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+                
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

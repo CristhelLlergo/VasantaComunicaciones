@@ -41,10 +41,11 @@ class ReportesOperativosResource extends Resource
                     ])
                     ->required(),
 
-                DatePicker::make('date')
-                    ->label('Fecha del Evento')
-                    ->default(now()->startOfDay()) 
+                    DatePicker::make('date')
+                    ->label('Fecha')
+                    ->default(now()) // Usar `now()` para considerar la fecha y hora actuales
                     ->required(),
+                
 
                 FileUpload::make('pdf_document')
                     ->label('Documento PDF')
