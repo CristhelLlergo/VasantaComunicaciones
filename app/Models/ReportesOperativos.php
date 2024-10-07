@@ -24,7 +24,7 @@ class ReportesOperativos extends Model
         return $this->belongsTo(User::class, 'id_users');
     }
 
-    public function operacion()
+    public function operaciones()
     {
         return $this->belongsTo(Operaciones::class, 'id_site'); 
     }

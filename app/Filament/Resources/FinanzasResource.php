@@ -29,13 +29,13 @@ class FinanzasResource extends Resource
             ->schema([
             Select::make('id_site')
                 ->label('Nombre del Sitio')
-                ->relationship('operaciones', 'site_name') 
+                ->relationship('operaciones', 'site_name')  // Asegúrate de que la relación 'operacion' esté bien definida en el modelo
                 ->required(),
             
 
             DatePicker::make('date')
                 ->label('Fecha')
-                ->default(now()->startOfDay()) 
+                ->default(now()->subDay()->startOfDay())
                 ->required(),
 
             Select::make('movement')
@@ -92,11 +92,10 @@ class FinanzasResource extends Resource
         
             ->columns([
 
-                TextColumn::make('operaciones.site_name')
+            TextColumn::make('operaciones.site_name')  
                 ->label('Nombre del Sitio')
                 ->sortable()
                 ->searchable(),
-
             TextColumn::make('date')
                 ->label('Fecha')
                 ->sortable()

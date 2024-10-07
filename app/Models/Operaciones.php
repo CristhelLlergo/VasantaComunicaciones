@@ -25,7 +25,6 @@ class Operaciones extends Model
         return $this->belongsTo(User::class, 'id_users');
     }
 
-    // Relación con ReportesOperativos (una operación puede tener varios reportes operativos)
     public function reportesOperativos()
     {
         return $this->hasMany(ReportesOperativos::class, 'id_site');
