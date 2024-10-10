@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\RoleResource\RelationManagers\PermissionsRelationManager;
 use App\Filament\Resources\RolesResource\Pages;
 use App\Filament\Resources\RolesResource\RelationManagers;
 use App\Models\Roles;
@@ -56,6 +57,7 @@ class RolesResource extends Resource
     public static function getRelations(): array
     {
         return [
+            PermissionsRelationManager::class,
             
         ];
     }

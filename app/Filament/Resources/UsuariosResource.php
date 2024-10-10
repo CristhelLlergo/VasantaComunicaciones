@@ -7,6 +7,7 @@ use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use App\Filament\Resources\UsuariosResource\RelationManagers\RolesRelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
@@ -14,7 +15,7 @@ use Filament\Forms\Components\TextInput;
 
 class UsuariosResource extends Resource
 {
-    protected static ?string $model = User::class; // Asegúrate de que apunte al modelo correcto
+    protected static ?string $model = User::class;
 
     protected static ?string $navigationGroup = 'Seguridad'; 
     protected static ?string $navigationIcon = 'heroicon-o-users';
@@ -68,7 +69,7 @@ class UsuariosResource extends Resource
     public static function getRelations(): array
     {
         return [
-            
+            RolesRelationManager::class,
         ];
     }
 

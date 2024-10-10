@@ -58,4 +58,10 @@ class User extends Authenticatable
      {
          return $this->hasMany(ReportesOperativos::class, 'id_users');
      }
+     public function roles()
+     {
+         return $this->belongsToMany(Roles::class, 'roles_user', 'user_id', 'role_id');
+     }
+     
+
 }
