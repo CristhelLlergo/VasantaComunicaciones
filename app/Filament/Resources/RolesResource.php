@@ -18,13 +18,13 @@ class RolesResource extends Resource
 {
     protected static ?string $model = Roles::class;
     protected static ?string $navigationGroup = 'Seguridad';
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-lock-closed';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('name') // Se ha eliminado la coma anterior
+                TextInput::make('name') 
                     ->label('Nombre')
                     ->autofocus()
                     ->required(),
@@ -41,7 +41,7 @@ class RolesResource extends Resource
                     ->searchable(),
             ])
             ->filters([
-                // Puedes agregar filtros aquí si lo deseas
+                
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
