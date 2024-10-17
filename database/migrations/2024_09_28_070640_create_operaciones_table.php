@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('event_status'); 
             $table->timestamps();
 
-            // Relación con la tabla de Usuario 
+            
             $table->foreign('id_users')->references('id')->on('users')->onDelete('cascade');
         });
     }

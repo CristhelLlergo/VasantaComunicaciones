@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('status'); 
             $table->timestamps();
 
-            // Foreign key con la tabla 'operaciones'
+            
             $table->foreign('id_site')->references('id')->on('operaciones')->onDelete('cascade');
         });
     }

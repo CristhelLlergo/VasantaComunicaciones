@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
-
+use App\Models\User;
+use App\Http\Controllers\FinanzasController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,8 +15,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-    
+$user = User::find(1);
+$user->assignRole('admin');
 
+
+echo $user->hasPermissions('Reportes_operativos_create') 
+    ? "El usuario tiene permiso para crear reportes operativos." 
+    : "El usuario no tiene permiso para crear reportes operativos.";
+
+   
+    return view('welcome');
+   
 });
 

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('pdf_document'); 
             $table->timestamps();
 
-            // Clave foránea apuntando a la tabla de usuarios
+          
             $table->foreign('id_users')->references('id')->on('users')->onDelete('cascade');
         });
     }

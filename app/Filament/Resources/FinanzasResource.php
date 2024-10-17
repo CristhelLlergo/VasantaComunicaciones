@@ -175,13 +175,15 @@ class FinanzasResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+                
             ]);
+            
     }
 
     public static function getRelations(): array
     {
         return [
-            //
+            
         ];
     }
 
