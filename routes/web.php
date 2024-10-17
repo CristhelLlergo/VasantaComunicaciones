@@ -15,13 +15,7 @@ use App\Http\Controllers\FinanzasController;
 */
 
 Route::get('/', function () {
-$user = User::find(1);
-$user->assignRole('admin');
 
-
-echo $user->hasPermissions('Reportes_operativos_create') 
-    ? "El usuario tiene permiso para crear reportes operativos." 
-    : "El usuario no tiene permiso para crear reportes operativos.";
 
    
     return view('welcome');
