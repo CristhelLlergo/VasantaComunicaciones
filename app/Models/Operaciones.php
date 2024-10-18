@@ -29,4 +29,5 @@ class Operaciones extends Model
     {
         return $this->hasMany(ReportesOperativos::class, 'id_site');
     }
+    
 }

@@ -26,12 +26,11 @@ class OperacionesResource extends Resource
                 ->label('Nombre del Sitio')
                 ->required(),
 
-                DateTimePicker::make('registration_timestamp')
+            DateTimePicker::make('registration_timestamp')
                 ->label('Fecha y Hora de Registro')
                 ->required()
                 ->default(now()) 
                 ->seconds(false),
-            
             
 
             Select::make('event_type')
@@ -64,15 +63,17 @@ class OperacionesResource extends Resource
                     'tecnico_infraestructura' => 'Técnico de Infraestructura',
                 ])
                 ->required(),
-
+            
             DatePicker::make('opening_date')
                 ->label('Fecha de Apertura del Evento')
                 ->required(),
-
+            
             DatePicker::make('closing_date')
                 ->label('Fecha de Cierre del Evento')
-                ->nullable(),
-                
+                ->required()
+                ->after('opening_date') 
+                ->rules(['after_or_equal:opening_date']),
+                   
 
             Select::make('event_status')
                 ->label('Estatus del Evento')

@@ -70,10 +70,12 @@ class FinanzasResource extends Resource
             DatePicker::make('date_of_movement')
                 ->label('Fecha de Movimiento')
                 ->required(),
-
             DatePicker::make('expiration_date')
                 ->label('Fecha de Expiración')
-                ->required(),
+                ->required()
+                ->after('date_of_movement') 
+                ->required()
+                ->rules(['after_or_equal:date_of_movement']),
 
             Select::make('status')
                 ->label('Estado')
