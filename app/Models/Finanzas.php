@@ -27,6 +27,11 @@ class Finanzas extends Model
     {
         return $this->belongsTo(Operaciones::class, 'id_site', 'id'); 
     }
+    public function movimientos()
+    {
+       
+    }
+
     
     
     
