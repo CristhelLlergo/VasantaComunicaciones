@@ -42,7 +42,7 @@ class PermisoController extends Controller
      */
     public function show(string $id)
     {
-        $permission = Permission::findOrFail($id);
+        $permission = Permission::find($id);
         return view('admin.evaluaciones.mostrar_permiso', compact('permission'));
     }
 
@@ -51,7 +51,7 @@ class PermisoController extends Controller
      */
     public function edit(string $id)
     {
-        $permission = Permission::findOrFail($id);
+        $permission = Permission::find($id);
         return view('admin.evaluaciones.editar_permiso', compact('permission'));
     }
 
@@ -79,12 +79,12 @@ class PermisoController extends Controller
     public function destroy(string $id)
     {
         //FORMA UNO
-        $permission = Permission::findOrFail($id);
+        $permission = Permission::find($id);
         $permission->delete();
 
         //DOS
         // DB::table("roles")->where('id',$id)->delete();
-        // return back();
+        return back();
 
     }
 }

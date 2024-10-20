@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
@@ -23,7 +24,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.evaluaciones.crear_rol');
     }
 
     /**
@@ -32,8 +33,8 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         //chepi, comenté el segundo ya que debes colocar el nombre que le pusistes al input donde estas guardando el nombre del rol en la vista
-        $role = Role::create(['name' => $request]);
-        // $role = Role::create(['name' => $request->input('nombreDelInput')])
+        // $role = Role::create(['name' => $request]);
+        $role = Role::create(['name' => $request->input('nombreDelInput')]);
         return back();
     }
 
@@ -42,23 +43,28 @@ class RoleController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Role $role)
     {
-        //
+        //pasando roles y permisos para asignación de permisos al rol
+        // $role = Role::find($id);
+        $permisos = Permission::all();
+        return view('admin.evaluaciones.rolePermiso', compact('role','permisos'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Role $role)
     {
-        //
+        //actualizand y asignando permisos a roles
+        $role->permissions()->sync($request->permisos);
+        return redirect()->route('roles.edit', $role);
     }
 
     /**
@@ -66,6 +72,9 @@ class RoleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $role = Role::find($id);
+        // eliminando el rol
+        $role->delete();
+        return back();
     }
 }
