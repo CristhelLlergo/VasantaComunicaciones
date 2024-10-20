@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Models\User;
-use App\Http\Controllers\FinanzasController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,10 +14,5 @@ use App\Http\Controllers\FinanzasController;
 */
 
 Route::get('/', function () {
-
-
-   
     return view('welcome');
-   
 });
-
