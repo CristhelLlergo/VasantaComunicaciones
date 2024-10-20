@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Http\Controllers\FinanzasController;
+use App\Http\Controllers\RoleController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,4 +23,7 @@ Route::get('/', function () {
     return view('welcome');
    
 });
+//prueba con esta ruta
+// Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
+
 
