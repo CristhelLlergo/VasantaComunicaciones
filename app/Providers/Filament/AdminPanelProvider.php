@@ -27,10 +27,15 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->brandName('Filament Demo')
+            ->brandLogo(asset('images/vasanta.webp'))
+            ->brandLogoHeight('3.5rem')
+            
             ->colors([
                 'primary' => Color::Blue,
                 
             ])
+            ->sidebarCollapsibleOnDesktop()
             ->font('Open Sans')
             ->favicon('images/vasanta.webp')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
@@ -57,5 +62,6 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ]);
+
     }
 }

@@ -22,12 +22,12 @@ class Finanzas extends Model
         'status',
     ];
 
-    // Relación con Operaciones
+    
     public function operaciones()
     {
         return $this->belongsTo(Operaciones::class, 'id_site', 'id'); 
     }
-    
+
 
     
     

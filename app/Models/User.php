@@ -8,10 +8,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
-
+    use HasApiTokens, HasFactory, Notifiable ;
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -58,28 +59,12 @@ class User extends Authenticatable
      {
          return $this->hasMany(ReportesOperativos::class, 'id_users');
      }
-     public function roles()
-     {
-         return $this->belongsToMany(Roles::class, 'roles_user', 'user_id', 'role_id');
-     }
+    //  public function roles()
+    //  {
+    //      return $this->belongsToMany(Roles::class, 'roles_user', 'user_id', 'role_id');
+    //  }
     
-     public function assignRole(string $roleName)
-     {
-         $role = Roles::where('name', $roleName)->first();
-         if ($role && !$this->roles()->where('role_id', $role->id)->exists()) {
-             $this->roles()->attach($role);
-         }
-     }
      
-     public function hasPermissions(string $permission): bool
-     {
-         foreach ($this->roles as $role) {
-             if ($role->permissions->contains('name', $permission)) {
-                 return true;
-             }
-         }
-         return false;
-     }
      
     
 }
