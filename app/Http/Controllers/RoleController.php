@@ -43,7 +43,11 @@ class RoleController extends Controller
      */
     public function show(string $id)
     {
-        
+        $role = Role::find($id);
+        $allPermissions = Permission::all();
+        $rolePermissions = $role->permissions->pluck('id')->toArray();
+        //ABRIR LA VISTA DE ROL_PERMISION
+        return view('admin.evaluaciones.rolePermiso', compact('role', 'allPermissions', 'rolePermissions'));
     }
 
     /**
@@ -52,7 +56,7 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         //pasando roles y permisos para asignación de permisos al rol
-        // $role = Role::find($id);
+        
         $permisos = Permission::all();
         return view('admin.roles.rolePermiso', compact('role','permisos'));
     }
