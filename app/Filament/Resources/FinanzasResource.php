@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\FinanzasResource\Pages;
-use App\Filament\Resources\FinanzasResource\RelationManagers\MovimientosRelationManager;
 use App\Models\Finanzas;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -14,28 +13,22 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class FinanzasResource extends Resource
 {
     protected static ?string $model = Finanzas::class;
-    // protected static ?string $navigationGroup = 'Administración Financiera'; 
     protected static ?string $navigationIcon = 'heroicon-o-calculator';
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-            Select::make('id_site')
-                ->label('Nombre del Sitio')
-                ->relationship('operaciones', 'site_name')  // Asegúrate de que la relación 'operacion' esté bien definida en el modelo
-                ->required(),
-            
+        return $form->schema([
+            TextInput::make('id_site.name')
+            ->label('Nombre del Sitio')
+            ->required(),
 
             DatePicker::make('date')
                 ->label('Fecha')
-                ->default(now()->subDay()->startOfDay())
+                ->default(now())
                 ->required(),
 
             Select::make('movement')
@@ -70,11 +63,11 @@ class FinanzasResource extends Resource
             DatePicker::make('date_of_movement')
                 ->label('Fecha de Movimiento')
                 ->required(),
+
             DatePicker::make('expiration_date')
                 ->label('Fecha de Expiración')
                 ->required()
-                ->after('date_of_movement') 
-                ->required()
+                ->after('date_of_movement')
                 ->rules(['after_or_equal:date_of_movement']),
 
             Select::make('status')
@@ -84,20 +77,17 @@ class FinanzasResource extends Resource
                     'no pagado' => 'No Pagado',
                 ])
                 ->required(),
-        
-            ]);
+        ]);
     }
 
     public static function table(Table $table): Table
     {
-        return $table
-        
-            ->columns([
-
-            TextColumn::make('operaciones.site_name')  
+        return $table->columns([
+            TextColumn::make('operaciones.site_name')
                 ->label('Nombre del Sitio')
                 ->sortable()
                 ->searchable(),
+
             TextColumn::make('date')
                 ->label('Fecha')
                 ->sortable()
@@ -157,36 +147,24 @@ class FinanzasResource extends Resource
                     'pagado' => 'success',
                     'no pagado' => 'danger',
                     default => 'gray',
-                    
                 }),
-                
-            ])
-            ->emptyStateHeading('No hay registros financieros disponibles')
-            ->emptyStateDescription('Actualmente no hay datos de finanzas registrados. Por favor, agrega nuevos movimientos financieros para empezar a gestionar la información.')
-
-            ->filters([
-                
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                 Tables\Actions\DeleteAction::make(),
-                
-                
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-                
-            ]);
-            
+        ])
+        ->emptyStateHeading('No hay registros financieros disponibles')
+        ->emptyStateDescription('Actualmente no hay datos de finanzas registrados. Por favor, agrega nuevos movimientos financieros para empezar a gestionar la información.')
+        ->actions([
+            Tables\Actions\EditAction::make(),
+            Tables\Actions\DeleteAction::make(),
+        ])
+        ->bulkActions([
+            Tables\Actions\BulkActionGroup::make([
+                Tables\Actions\DeleteBulkAction::make(),
+            ]),
+        ]);
     }
 
     public static function getRelations(): array
     {
-        return [
-            
-        ];
+        return [];
     }
 
     public static function getPages(): array

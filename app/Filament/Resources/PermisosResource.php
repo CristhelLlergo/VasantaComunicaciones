@@ -4,12 +4,13 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\PermisosResource\Pages;
 use App\Filament\Resources\PermisosResource\RelationManagers;
-use App\Models\Permisos;
+use Spatie\Permission\Models\Permission;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 
@@ -18,7 +19,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PermisosResource extends Resource
 {
-    protected static ?string $model = Permisos::class;
+    protected static ?string $model = permission::class;
 
     protected static ?string $navigationGroup = 'Seguridad';
 
@@ -49,6 +50,7 @@ class PermisosResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

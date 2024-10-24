@@ -4,8 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\RoleResource\RelationManagers\PermissionsRelationManager;
 use App\Filament\Resources\RolesResource\Pages;
-use App\Filament\Resources\RolesResource\RelationManagers;
-use App\Models\Roles;
+use Spatie\Permission\Models\Role;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -16,7 +15,7 @@ use Filament\Forms\Components\TextInput;
 
 class RolesResource extends Resource
 {
-    protected static ?string $model = Roles::class;
+    protected static ?string $model = Role::class;
     protected static ?string $navigationGroup = 'Seguridad';
     protected static ?string $navigationIcon = 'heroicon-o-lock-closed';
 
@@ -24,7 +23,7 @@ class RolesResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name') 
+                TextInput::make('name')
                     ->label('Nombre')
                     ->autofocus()
                     ->required(),
@@ -58,7 +57,6 @@ class RolesResource extends Resource
     {
         return [
             PermissionsRelationManager::class,
-            
         ];
     }
 

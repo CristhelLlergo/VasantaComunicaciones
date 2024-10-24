@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Filament\Resources\RoleResource\RelationManagers;
+namespace App\Filament\Resources\UsuarioResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Spatie\Permission\Models\Permission;
 
-class PermissionsRelationManager extends RelationManager
-{  
-    protected static string $relationship = 'permissions'; 
+class RolesRelationManager extends RelationManager
+{
+    protected static string $relationship = 'roles';
 
     public function form(Form $form): Form
     {
@@ -32,14 +31,15 @@ class PermissionsRelationManager extends RelationManager
             ])
             ->headerActions([
                 Tables\Actions\AttachAction::make()
-                    ->preloadRecordSelect(),
+                ->preloadRecordSelect(),
             ])
             ->actions([
+                
                 Tables\Actions\DetachAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DetachBulkAction::make(),
                 ]),
             ]);
     }

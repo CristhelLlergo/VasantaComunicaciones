@@ -30,4 +30,8 @@ class Operaciones extends Model
         return $this->hasMany(ReportesOperativos::class, 'id_site');
     }
     
+    public function finanzas()
+    {
+        return $this->hasMany(Finanzas::class, 'id_site', 'id'); 
+    }
 }
